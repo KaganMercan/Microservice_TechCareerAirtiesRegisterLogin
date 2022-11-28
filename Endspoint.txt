@@ -1,0 +1,126 @@
+// REGISTER
+POST /api/authentication/register HTTP/1.1
+Host: localhost:1111
+Content-Type: application/json
+Content-Length: 82
+
+{
+    "name": "testKağan",
+    "username": "testkagan",
+    "password": "123456"
+}
+
+
+// LOGIN
+POST /api/authentication/login HTTP/1.1
+Host: localhost:1111
+Content-Type: application/json
+Content-Length: 57
+
+{
+    "username": "testkagan",
+    "password": "123456"
+}
+///////////////////////////////////////
+GATEWAY DAILY
+///////////////////////////////////////
+
+// CREATE
+http://localhost:1111/gateway/daily
+POST /gateway/daily HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer
+Content-Type: application/json
+{
+    "dailyHeader":"header1",
+    "dailyContent":"içerik1",
+    "email":"hamitmizrak1@gmail.com",
+    "password":"Hm1234561@"
+}
+
+// LIST
+POST /gateway/daily HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDk0MzV9.DfbaAoOqBdAM3eVVCvi0Yp20YiUbKDYQVecmp-H7GN9Q3W0b_De9HqhXe1BWv5MSJbS_zOs6_1SSqoRMvXf2DnF2UI99bCM7yGFgPEUpQPqK3dJvKuoUuwb7a7_DVjQfWODMCZmy1_qWWybHEuEjXenKWaJUvddHgpAthOesnkAmY9QesisMPZ_Awepp_DZNqPiIHvgKfVtRdFmI0RkO-8dG2SE23RpZmHZqHHEHVE70l931_DZu4mPsiEXNRSvsRCMEdh-4HX7fLX4FuzOX8vYrRyaTMPBPm4VCWuvGvLW86vDO-j2wye8j7NJWpGtAxAD-GJAWA9JNA9IWJWB2nw
+Content-Type: application/json
+Content-Length: 83
+
+{
+    "dailyName": "Kağanın başlığı",
+    "dailyDescription": "Kağanın içeriği"
+}
+
+// LIST
+GET /gateway/daily HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDk0MzV9.DfbaAoOqBdAM3eVVCvi0Yp20YiUbKDYQVecmp-H7GN9Q3W0b_De9HqhXe1BWv5MSJbS_zOs6_1SSqoRMvXf2DnF2UI99bCM7yGFgPEUpQPqK3dJvKuoUuwb7a7_DVjQfWODMCZmy1_qWWybHEuEjXenKWaJUvddHgpAthOesnkAmY9QesisMPZ_Awepp_DZNqPiIHvgKfVtRdFmI0RkO-8dG2SE23RpZmHZqHHEHVE70l931_DZu4mPsiEXNRSvsRCMEdh-4HX7fLX4FuzOX8vYrRyaTMPBPm4VCWuvGvLW86vDO-j2wye8j7NJWpGtAxAD-GJAWA9JNA9IWJWB2nw
+
+
+// FIND
+GET /gateway/daily/4 HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJkZW5lbWVlIiwidXNlcklkIjo4NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjY5NzQ0ODE0fQ.VUMPT7pKwxwoY3cXebmo49y7uCA-Qjzr3TDxdxURKpSz3SY3oHYNgkVHY2bBCvTjhI9TRrlboyMKqMjiIIRtUAetksFt3-B436WwsK7sN_40yGXJZ9bwnYiCh2yOGOYEtm4-XLF1OKIoY-4H2MpI9KJgUO7KfnsO8az2TLqP0MkTlxaGNidNdE5pkEsNnbMeK43fukyX7Q1ZE-FJLkrk1LUvyhXuQ20A6M93VQqKtY-Ij2PtF_EbWs76EguuNUperJu1D1mwypQ1RhPe4qmusNFqPESaiKm2tYZ79HuZ1s3ci9DhLfD4nEFXzxlki8lHO03ElHiWNVR3R--M9G7q3w
+
+
+// UPDATE
+PUT /gateway/daily/3 HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJkZW5lbWVlIiwidXNlcklkIjo4NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjY5NzQ0ODE0fQ.VUMPT7pKwxwoY3cXebmo49y7uCA-Qjzr3TDxdxURKpSz3SY3oHYNgkVHY2bBCvTjhI9TRrlboyMKqMjiIIRtUAetksFt3-B436WwsK7sN_40yGXJZ9bwnYiCh2yOGOYEtm4-XLF1OKIoY-4H2MpI9KJgUO7KfnsO8az2TLqP0MkTlxaGNidNdE5pkEsNnbMeK43fukyX7Q1ZE-FJLkrk1LUvyhXuQ20A6M93VQqKtY-Ij2PtF_EbWs76EguuNUperJu1D1mwypQ1RhPe4qmusNFqPESaiKm2tYZ79HuZ1s3ci9DhLfD4nEFXzxlki8lHO03ElHiWNVR3R--M9G7q3w
+Content-Type: application/json
+Content-Length: 80
+
+{
+    "dailyName": "updated header",
+    "dailyDescription": "updated content"
+}
+
+// DELETE
+DELETE /gateway/daily/3 HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJkZW5lbWVlIiwidXNlcklkIjo4NCwicm9sZXMiOiJVU0VSIiwiZXhwIjoxNjY5NzQ0ODE0fQ.VUMPT7pKwxwoY3cXebmo49y7uCA-Qjzr3TDxdxURKpSz3SY3oHYNgkVHY2bBCvTjhI9TRrlboyMKqMjiIIRtUAetksFt3-B436WwsK7sN_40yGXJZ9bwnYiCh2yOGOYEtm4-XLF1OKIoY-4H2MpI9KJgUO7KfnsO8az2TLqP0MkTlxaGNidNdE5pkEsNnbMeK43fukyX7Q1ZE-FJLkrk1LUvyhXuQ20A6M93VQqKtY-Ij2PtF_EbWs76EguuNUperJu1D1mwypQ1RhPe4qmusNFqPESaiKm2tYZ79HuZ1s3ci9DhLfD4nEFXzxlki8lHO03ElHiWNVR3R--M9G7q3w
+
+///////////////////////////////////////
+GATEWAY BLOG
+///////////////////////////////////////
+
+// CREATE
+POST /gateway/blog HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDk0MzV9.DfbaAoOqBdAM3eVVCvi0Yp20YiUbKDYQVecmp-H7GN9Q3W0b_De9HqhXe1BWv5MSJbS_zOs6_1SSqoRMvXf2DnF2UI99bCM7yGFgPEUpQPqK3dJvKuoUuwb7a7_DVjQfWODMCZmy1_qWWybHEuEjXenKWaJUvddHgpAthOesnkAmY9QesisMPZ_Awepp_DZNqPiIHvgKfVtRdFmI0RkO-8dG2SE23RpZmHZqHHEHVE70l931_DZu4mPsiEXNRSvsRCMEdh-4HX7fLX4FuzOX8vYrRyaTMPBPm4VCWuvGvLW86vDO-j2wye8j7NJWpGtAxAD-GJAWA9JNA9IWJWB2nw
+Content-Type: application/json
+Content-Length: 183
+
+{
+    "blogHeader": "header",
+    "blogContent": "content",
+    "blogImage": "https://img.freepik.com/free-vector/thank-you-word-doodle-typography-lettering_53876-116957.jpg?w=2000"
+}
+
+// LIST
+GET /gateway/blog HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDYyMzN9.a_gOPgd4o-rTsJITPbzzTs6gSJIKD2NPbogO27R4-GVMm-UeYkZ_52o-BDQhOq_UK9n8oBsxwH4mYRHtGs-txSyVQEYmrDUmuYOl1Y_cl5vH1KX1OtrBUB-47hcQuo0XX8ioMb7mx_gxYWI3FQddLY161cODv-DCmiTNYaE1ChNZQHPpijB3fKgpmRv5VcJKn08kd3RpGhkOb3VsXp_B9UseouXiKICVYcOEJYjgOXQOMT15qi41y60pw_iRnDwBJEabzIAoLb1zhjbeZkf3-iW99YUwmxSr6QAD_XWic03av1IuqnAKTeZPUq1TGuVYXOUj-aQ692i9EQq8JyNbsA
+
+
+// FIND
+GET /gateway/blog/2 HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDYyMzN9.a_gOPgd4o-rTsJITPbzzTs6gSJIKD2NPbogO27R4-GVMm-UeYkZ_52o-BDQhOq_UK9n8oBsxwH4mYRHtGs-txSyVQEYmrDUmuYOl1Y_cl5vH1KX1OtrBUB-47hcQuo0XX8ioMb7mx_gxYWI3FQddLY161cODv-DCmiTNYaE1ChNZQHPpijB3fKgpmRv5VcJKn08kd3RpGhkOb3VsXp_B9UseouXiKICVYcOEJYjgOXQOMT15qi41y60pw_iRnDwBJEabzIAoLb1zhjbeZkf3-iW99YUwmxSr6QAD_XWic03av1IuqnAKTeZPUq1TGuVYXOUj-aQ692i9EQq8JyNbsA
+
+// UPDATE
+PUT /gateway/blog/1 HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDYyMzN9.a_gOPgd4o-rTsJITPbzzTs6gSJIKD2NPbogO27R4-GVMm-UeYkZ_52o-BDQhOq_UK9n8oBsxwH4mYRHtGs-txSyVQEYmrDUmuYOl1Y_cl5vH1KX1OtrBUB-47hcQuo0XX8ioMb7mx_gxYWI3FQddLY161cODv-DCmiTNYaE1ChNZQHPpijB3fKgpmRv5VcJKn08kd3RpGhkOb3VsXp_B9UseouXiKICVYcOEJYjgOXQOMT15qi41y60pw_iRnDwBJEabzIAoLb1zhjbeZkf3-iW99YUwmxSr6QAD_XWic03av1IuqnAKTeZPUq1TGuVYXOUj-aQ692i9EQq8JyNbsA
+Content-Type: application/json
+Content-Length: 195
+
+{
+    "blogHeader": "headerupdate",
+    "blogContent": "contentupdate",
+    "blogImage": "https://img.freepik.com/free-vector/thank-you-word-doodle-typography-lettering_53876-116957.jpg?w=2000"
+}
+
+// DELETE
+DELETE /gateway/blog/2 HTTP/1.1
+Host: localhost:1111
+Authorization: Bearer eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiJ0ZXN0a2FnYW4iLCJ1c2VySWQiOjg1LCJyb2xlcyI6IlVTRVIiLCJleHAiOjE2Njk3NDYyMzN9.a_gOPgd4o-rTsJITPbzzTs6gSJIKD2NPbogO27R4-GVMm-UeYkZ_52o-BDQhOq_UK9n8oBsxwH4mYRHtGs-txSyVQEYmrDUmuYOl1Y_cl5vH1KX1OtrBUB-47hcQuo0XX8ioMb7mx_gxYWI3FQddLY161cODv-DCmiTNYaE1ChNZQHPpijB3fKgpmRv5VcJKn08kd3RpGhkOb3VsXp_B9UseouXiKICVYcOEJYjgOXQOMT15qi41y60pw_iRnDwBJEabzIAoLb1zhjbeZkf3-iW99YUwmxSr6QAD_XWic03av1IuqnAKTeZPUq1TGuVYXOUj-aQ692i9EQq8JyNbsA

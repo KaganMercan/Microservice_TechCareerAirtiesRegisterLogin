@@ -1,0 +1,9 @@
+version: '3.1'
+services:
+  app:
+    container_name: register_login.jar
+    image: register_login.jar
+    restart: always
+    build: ./
+    ports:
+      - "1111:1111"
