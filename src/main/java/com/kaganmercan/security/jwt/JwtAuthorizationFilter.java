@@ -17,19 +17,18 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Autowired
     private  IJwtProvider iJwtProvider;
 
-    //filter daha önce çalışmamışsa
-    //requet ve responselara erişir bu filter
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //gelen istediği
+        // get Authentication
         Authentication authentication=iJwtProvider.getAuthentication(request);
 
-        //kimlik doğrulama
+        // Validation of credentials
         if(authentication!=null && iJwtProvider.isValidateToken(request)){
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        //filtereleme sonrasında geri dönüş sağladık
+        // Get response through the request
         filterChain.doFilter(request,response);
     }
 }

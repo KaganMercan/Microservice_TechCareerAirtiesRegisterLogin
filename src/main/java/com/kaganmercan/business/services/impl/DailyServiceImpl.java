@@ -2,6 +2,8 @@ package com.kaganmercan.business.services.impl;
 
 import com.google.gson.JsonElement;
 import com.kaganmercan.business.services.IDailyService;
+import com.kaganmercan.exception.GlobalHandlingException;
+import com.kaganmercan.exception.ResourceNotFoundException;
 import com.kaganmercan.retrofit.RetrofitCommonGenerics;
 import com.kaganmercan.retrofit.request.IDailyServiceRequest;
 import lombok.RequiredArgsConstructor;
@@ -48,18 +50,30 @@ public class DailyServiceImpl implements IDailyService {
     // FIND
     @Override
     public JsonElement findDaily(Long id) {
-        return RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.findDaily(id));
+        if (RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.findDaily(id)) == null) {
+            throw new ResourceNotFoundException("Not found with given id.");
+        } else {
+            return RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.findDaily(id));
+        }
     }
 
     // UPDATE
     @Override
     public JsonElement updateDaily(Long id, JsonElement jsonElement) {
-        return RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.updateDaily(id, jsonElement));
+        if (RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.findDaily(id)) == null) {
+            throw new ResourceNotFoundException("Not found with given id.");
+        } else {
+            return RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.updateDaily(id, jsonElement));
+        }
     }
 
     // DELETE
     @Override
     public void deleteDaily(Long id) {
-        RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.deleteDaily(id));
+        if (RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.findDaily(id)) == null) {
+            throw new ResourceNotFoundException("Not found with given id.");
+        } else {
+            RetrofitCommonGenerics.retrofitGenerics(dailyServiceRequest.deleteDaily(id));
+        }
     }
 }

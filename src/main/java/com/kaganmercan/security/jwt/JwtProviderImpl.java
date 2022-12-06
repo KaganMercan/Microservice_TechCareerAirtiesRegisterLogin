@@ -30,21 +30,18 @@ import java.util.stream.Collectors;
 @Component
 public class JwtProviderImpl implements IJwtProvider {
 
-    //Token header String nesneleri oluştur
+    // Token header variables
     private static final String JWT_TOKEN_PREFIX = "Bearer";
     private static final String JWT_HEADER_STRING = "Authorization";
 
-    //token yaşama süresi
+    // Token lifecycle
     @Value("${authentication.jwt.expiration-ms}")
     private Long JWT_EXPIRATION_MS;
 
-    // Genel anahtar
+    // Private and public key
     private PublicKey jwtPublicKey;
-
-    // Gizli anahtar
     private PrivateKey jwtPrivateKey;
 
-    //parametresiz constructor
     public JwtProviderImpl(
             @Value("${authentication.jwt.public-key}") String jwtPublicKeyStr,
             @Value("${authentication.jwt.private-key}") String jwtPrivateKeyStr) throws InvalidKeySpecException {
@@ -99,10 +96,10 @@ public class JwtProviderImpl implements IJwtProvider {
                 .compact();
     }
 
-    // 2.YÖNTEM  resolveToken
-    // HEADER: bearer ile başlar ==> bearer (boşlukla beraber 7 karakterdir)
-    // jwt ayrıştırmak ve authentication nesnesi oluşturmayı sağlamak
-    //token unutma Bearer(boşluk)=7harf anahtar kelimesinden sonra
+    // resolveToken
+    /*/The HttpServletRequest object can be used to retrieve incoming HTTP request
+        headers and form data. The HttpServletResponse object can be used to set
+            the HTTP response headers (e.g., content-type) and the response message body./*/
     @Override
     public String resolveToken(HttpServletRequest httpServletRequest) {
         String bearerToken = httpServletRequest.getHeader(JWT_HEADER_STRING);
@@ -112,55 +109,42 @@ public class JwtProviderImpl implements IJwtProvider {
         return null;
     }
 
-    // 2.YÖNTEM  getAuthentication
+    // getAuthentication
     @Override
     public Authentication getAuthentication(HttpServletRequest httpServletRequest) {
         String token = resolveToken(httpServletRequest);
-        //eğer token null ise return null olsun
         if (token == null)
             return null;
-        //Claims JWT tüm bilgilerine erişim sağlıyor.
-        //Token verisinie ayrıştırmak
+        // For access all JWT information wwe use claims.
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(jwtPublicKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        //Claims üzeridnen username erişmek
-        //Claims üzeridnen userId erişmek
-        //Claims üzeridnen roles erişmek
         String username = claims.getSubject();
         Long userId = claims.get("userId", Long.class);
-        //dikakt kimlik doğrulama roles ile başlamalıdır. eğer rolde yoksa başına roles eklemeliyiz
         List<GrantedAuthority> authorities = Arrays.stream(claims.get("roles").toString().split(","))
                 .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-
-        //UserDetails kimlik doğrulama oluşturmak
         UserDetails userDetails = new UserPrincipal(userId, username, null);
         Authentication kimlikDogrulama = username != null ? new UsernamePasswordAuthenticationToken(userDetails, null, authorities) : null;
         return kimlikDogrulama;
     }
 
-    //3.YÖNTEM
-    // validate: token süresini kontrol etmek için
+    // Validation for control expiration date of JWT
     @Override
     public boolean isValidateToken(HttpServletRequest httpServletRequest) {
         String token = resolveToken(httpServletRequest);
         if (token == null)
             return false;
-
-        //Claims JWT tüm bilgilerine erişim sağlıyor.
-        //Token verisinie ayrıştırmak
+        // In here we use claims again to access all parsed JWT information
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(jwtPublicKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-
-
-        //eğer token süresi bitmişse false döndürelim yoksa true döndürelim
+        // Then we get expiration information inside the Claims data.
         if (claims.getExpiration().before(new Date()))
             return false;
         return true;

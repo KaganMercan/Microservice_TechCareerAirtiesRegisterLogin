@@ -11,20 +11,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-// authentication:kimlik doğrulama işelmini yapacağız.
-// authorization:Yetkilendirme
+// Authentication is, validate user credentials
+// Authorization is, provides access to certain data
 
 //lombok
 @Data
 @NoArgsConstructor
 @Log4j2
 public class UserPrincipal implements UserDetails {
-    //field
+
     private Long id;
     private String username;
     transient private String password;
 
-    //parametreli constructor
     public UserPrincipal(Long id, String username, String password) {
         this.id = id;
         this.username = username;
@@ -33,7 +32,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //rol tabanlı olmadığı için
         return Collections.singletonList(new SimpleGrantedAuthority(ERoles.USER.toString()));
     }
 

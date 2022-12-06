@@ -31,7 +31,7 @@ public interface IDailyApi {
     ResponseEntity<?> findDaily(Long id);
 
     // UPDATE
-    ApiResult updateDaily(Long id, JsonElement jsonElement);
+    ApiResult updateDaily(Long id, JsonElement jsonElement) throws Throwable;
 
     // DELETE
     ApiResult deleteDaily(Long id);

@@ -1,5 +1,6 @@
 package com.kaganmercan.retrofit;
 
+import com.kaganmercan.exception.ResourceNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import retrofit2.Call;
 import retrofit2.Response;

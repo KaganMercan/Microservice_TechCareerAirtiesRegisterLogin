@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 //lombok
 @RequiredArgsConstructor
-
+// In API layer, for example we POST our Http Request and get Http response.
+//  So we are using ResponseEntity in this layer.
 @RestController
 @RequestMapping("/api/authentication")
 public class AuthenticationApiImpl implements IAuthenticationApi {
@@ -27,7 +28,10 @@ public class AuthenticationApiImpl implements IAuthenticationApi {
 
 
     //REGISTER
+    // Localhost
     // http://localhost:1111/api/authentication/register
+    // EC2
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/api/authentication/register
     @Override
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody UserDto userDto) {
@@ -40,7 +44,10 @@ public class AuthenticationApiImpl implements IAuthenticationApi {
     }
 
     //LOGIN
+    // Localhost
     // http://localhost:1111/api/authentication/login
+    // EC2
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/api/authentication/login
     @Override
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto) {
@@ -50,7 +57,10 @@ public class AuthenticationApiImpl implements IAuthenticationApi {
     }
 
     //LIST
+    // Localhost
     // http://localhost:1111/api/authentication/list
+    // EC2
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/api/authentication/list
     @Override
     @GetMapping("list")
     public ResponseEntity<?> list() {

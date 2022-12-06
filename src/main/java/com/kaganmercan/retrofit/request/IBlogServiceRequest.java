@@ -10,19 +10,7 @@ import java.util.List;
  * @author kaganmercan
  */
 public interface IBlogServiceRequest {
-    // REST             REQUEST
-    // ----------       -------
-    // @GetMapping      @GET
-    // @PostMapping     @POST
-    // @DeleteMapping   @DELETE
-    // @PutMapping      @PUT
-
-    // @PathVariable    @Path
-    // @RequestBody     @Body
-
-    // ResponseEntity   Call
-    // BlogDto         JsonElement
-
+    // Make Calls to
     // CREATE
     @POST("/api/v1/blog/create")
     Call<JsonElement> createBlog(@Body JsonElement jsonElement);

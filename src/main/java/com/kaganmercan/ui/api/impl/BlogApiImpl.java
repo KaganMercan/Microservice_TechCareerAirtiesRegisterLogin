@@ -3,6 +3,7 @@ package com.kaganmercan.ui.api.impl;
 import com.google.gson.JsonElement;
 import com.kaganmercan.business.services.IBlogServices;
 import com.kaganmercan.error.ApiResult;
+import com.kaganmercan.exception.ResourceNotFoundException;
 import com.kaganmercan.ui.api.IBlogApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,10 @@ public class BlogApiImpl implements IBlogApi {
     private static final String PATH = "/gateway/blog";
 
     // CREATE
+    // Localhost
     // http://localhost:1111/gateway/blog
+    // EC2 Public DNS
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/gateway/blog
     @Override
     @PostMapping
     public ApiResult createBlog(@RequestBody JsonElement jsonElement) {
@@ -34,7 +38,10 @@ public class BlogApiImpl implements IBlogApi {
     }
 
     // LIST
+    // Localhost
     // http://localhost:1111/gateway/blog
+    // EC2 Public DNS
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/gateway/blog
     @Override
     @GetMapping
     public ResponseEntity<List<?>> listBlog() {
@@ -43,7 +50,10 @@ public class BlogApiImpl implements IBlogApi {
     }
 
     // FIND
+    // Localhost
     // http://localhost:1111/gateway/blog/1
+    // EC2 Public DNS
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/gateway/blog/1
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<?> findBlog(@PathVariable(name = "id") Long id) {
@@ -51,20 +61,32 @@ public class BlogApiImpl implements IBlogApi {
     }
 
     // UPDATE
+    // Localhost
     // http://localhost:1111/gateway/blog/1
+    // EC2 Public DNS
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/gateway/blog/1
     @Override
     @PutMapping("/{id}")
     public ApiResult updateBlog(@PathVariable(name = "id") Long id, @RequestBody JsonElement jsonElement) {
         blogService.updateBlog(id, jsonElement);
+        if(blogService.findBlog(id) == null){
+            return new ApiResult(404, "Blog post not found with given id", PATH);
+        }
         return new ApiResult(200, "Blog post updated", PATH);
     }
 
     // DELETE
+    // Localhost
     // http://localhost:1111/gateway/blog/1
+    // EC2 Public DNS
+    // http://ec2-54-211-143-21.compute-1.amazonaws.com:1111/gateway/blog/1
     @Override
     @DeleteMapping("/{id}")
     public ApiResult deleteBlog(@PathVariable(name = "id") Long id) {
         blogService.deleteBlog(id);
+        if(blogService.findBlog(id) == null){
+            return new ApiResult(404, "Blog post not found with given id", PATH);
+        }
         return new ApiResult(200, "Blog post deleted", PATH);
     }
 }

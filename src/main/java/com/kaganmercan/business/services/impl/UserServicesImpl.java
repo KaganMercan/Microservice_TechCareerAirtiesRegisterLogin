@@ -8,6 +8,7 @@ import com.kaganmercan.data.entity.UserEntity;
 import com.kaganmercan.data.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,9 +48,11 @@ public class UserServicesImpl implements IUserServices {
     @PostMapping("/save/product")
     public UserDto createUser(UserDto userDto) {
         if(userDto!=null){
+            // We mask our password in here
             userDto.setPassword(passwordEncoderBean.passwordEncoderMethod().encode(userDto.getPassword()));
-
+            // Mapping our Dto
             UserEntity userEntity=DtoToEntity(userDto);
+            // And save to repository
             repository.save(userEntity);
         }
         return userDto;

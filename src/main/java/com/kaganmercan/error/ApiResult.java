@@ -1,7 +1,9 @@
 package com.kaganmercan.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kaganmercan.exception.ResourceNotFoundException;
 import lombok.Data;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +23,7 @@ public class ApiResult {
 
     private String timestamp = nowDate();
     private int status;
-    private String error;
+    private ResourceNotFoundException error;
     private String message;
     private String path;
 
@@ -43,7 +45,8 @@ public class ApiResult {
         this.path = path;
     }
 
-    public ApiResult(int status, String error, String message, String path) {
+
+    public ApiResult(int status, ResourceNotFoundException error, String message, String path) {
         this.timestamp = nowDate();
         this.status = status;
         this.error = error;

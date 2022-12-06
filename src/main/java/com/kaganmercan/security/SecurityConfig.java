@@ -23,7 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //lombok
 @RequiredArgsConstructor
 
-//security
+// In a lifecycle of spring, this annotation handles our authorization requests codes.
 @EnableWebSecurity
 
 //bean için ekledim
@@ -35,8 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceCustom customUserDetailsService;
 
 
-    //////////////////////////////////////////////////////////////////////////////////
-    //BEAN
+
+    // BEAN
     //import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         };
     }
 
-    // JwtAuthorizationFilter için @Autowired için bean olarak işaretledim
+    // JwtAuthorizationFilter
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilterBeanMethod() {
         return new JwtAuthorizationFilter();
@@ -63,21 +63,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //////////////////////////////////////////////////////////////////////////////////
-    //kimlik doğrulama
+    // Authentication
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoderBean.passwordEncoderMethod());
     }
 
-    //yetkilendirme yapılandırılması roller sadece ilgili kişiler erişsin
+    // This configures method, handles authorization through page url's.
+    /*/ If we don't we don't authorize then 401 Unauthorized on certain sites
+         for which we are not authorized./*/
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Cross  Side Request Forgery (session kullanmayacaksak kapataabiliriz) ve JWT kullancağız.
+        // Cross  Side Request Forgery and JWT will be using.
         http.csrf().disable();
-
-
-        // session kullanmayacaksak kapatabiliriz)
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         //login
         http
@@ -99,8 +98,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll();
 
 
-        //authentication JWT için yazıldı
-        //filterdan önce
+        // That method simply configure JWT authentication filter before Username and Password.
         http.addFilterBefore(jwtAuthorizationFilterBeanMethod(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -108,5 +106,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/home/**","/login/**","/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**", "/h2-console/**", "/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/assets/**", "/fonts/**", "/dis/**", "/vendor1/**", "/assets2/**");
-    } //end configure WebSecurity(1)
+    }
 }
