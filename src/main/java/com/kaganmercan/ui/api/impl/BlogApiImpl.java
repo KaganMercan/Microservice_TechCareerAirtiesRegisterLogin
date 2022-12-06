@@ -69,12 +69,9 @@ public class BlogApiImpl implements IBlogApi {
     @PutMapping("/{id}")
     public ApiResult updateBlog(@PathVariable(name = "id") Long id, @RequestBody JsonElement jsonElement) {
         blogService.updateBlog(id, jsonElement);
-        if(blogService.findBlog(id) == null){
-            return new ApiResult(404, "Blog post not found with given id", PATH);
-        }
         return new ApiResult(200, "Blog post updated", PATH);
     }
-
+    // Handling exceptions are done.
     // DELETE
     // Localhost
     // http://localhost:1111/gateway/blog/1
@@ -84,9 +81,6 @@ public class BlogApiImpl implements IBlogApi {
     @DeleteMapping("/{id}")
     public ApiResult deleteBlog(@PathVariable(name = "id") Long id) {
         blogService.deleteBlog(id);
-        if(blogService.findBlog(id) == null){
-            return new ApiResult(404, "Blog post not found with given id", PATH);
-        }
         return new ApiResult(200, "Blog post deleted", PATH);
     }
 }
