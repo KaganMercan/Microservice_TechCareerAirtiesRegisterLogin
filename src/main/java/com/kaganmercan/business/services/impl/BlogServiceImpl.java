@@ -2,6 +2,7 @@ package com.kaganmercan.business.services.impl;
 
 import com.google.gson.JsonElement;
 import com.kaganmercan.business.services.IBlogServices;
+import com.kaganmercan.exception.ResourceNotFoundException;
 import com.kaganmercan.retrofit.RetrofitCommonGenerics;
 import com.kaganmercan.retrofit.request.IBlogServiceRequest;
 import lombok.RequiredArgsConstructor;
@@ -38,18 +39,30 @@ public class BlogServiceImpl implements IBlogServices {
     // FIND
     @Override
     public JsonElement findBlog(Long id) {
-        return RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.findBlog(id));
+        if (RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.findBlog(id)) == null) {
+            throw new ResourceNotFoundException("Not found with given id.");
+        } else {
+            return RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.findBlog(id));
+        }
     }
 
     // UPDATE
     @Override
     public JsonElement updateBlog(Long id, JsonElement jsonElement) {
-        return RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.updateBlog(id, jsonElement));
+        if (RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.findBlog(id)) == null) {
+            throw new ResourceNotFoundException("Not found with given id.");
+        } else {
+            return RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.updateBlog(id, jsonElement));
+        }
     }
 
     // DELETE
     @Override
     public void deleteBlog(Long id) {
-        RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.deleteBlog(id));
+        if (RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.findBlog(id)) == null) {
+            throw new ResourceNotFoundException("Not found with given id.");
+        } else {
+            RetrofitCommonGenerics.retrofitGenerics(blogServiceRequest.deleteBlog(id));
+        }
     }
 }
