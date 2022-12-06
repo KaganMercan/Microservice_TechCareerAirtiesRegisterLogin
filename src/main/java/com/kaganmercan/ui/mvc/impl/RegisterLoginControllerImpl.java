@@ -27,7 +27,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Log4j2
 
-// Daily and blog controller will be added.
 @Controller
 public class RegisterLoginControllerImpl implements IRegisterLoginController {
     private final IUserRepository repository;
