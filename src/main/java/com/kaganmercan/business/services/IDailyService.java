@@ -28,7 +28,7 @@ public interface IDailyService {
     JsonElement findDaily(Long id);
 
     // UPDATE
-    JsonElement updateDaily(Long id, JsonElement jsonElement) throws Throwable;
+    JsonElement updateDaily(Long id, JsonElement jsonElement);
 
     // DELETE
     void deleteDaily(Long id);
